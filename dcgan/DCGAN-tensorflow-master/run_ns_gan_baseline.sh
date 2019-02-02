@@ -1,0 +1,1 @@
+python ns_main.py --teacher_name="default" --mode="training" --epoch=5

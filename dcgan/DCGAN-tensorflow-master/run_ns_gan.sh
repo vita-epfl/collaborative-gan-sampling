@@ -1,0 +1,1 @@
+python ns_main.py

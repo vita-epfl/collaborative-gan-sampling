@@ -1,7 +1,8 @@
 ## Prerequisites:
  
 - tensorflow==1.9.0
-- CuDNN=9.0 
+- CUDA==9.0
+- CuDNN=7.0.5 
 - pillow
 - scipy
 - matplotlib
@@ -22,8 +23,10 @@ Download dataset with:
 
 ## MNIST:
 - cd dcgan/DCGAN-tensorflow-master
-- sh run_ns_gan.sh
+- To Train 
+    $ python ns_main.py 
+ 
+- To Collaboratively Sample
+    $ python ns_main.py --mode "refinement" --teacher_name "gpurollout" --epoch 2
 
 ## CelebA:
--
-- 

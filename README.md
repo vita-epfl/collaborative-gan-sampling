@@ -24,9 +24,23 @@ Download dataset with:
 ## MNIST:
 - cd dcgan/DCGAN-tensorflow-master
 - To Train 
+```
     $ python ns_main.py 
+```
  
 - To Collaboratively Sample
-    $ python ns_main.py --mode "refinement" --teacher_name "gpurollout" --epoch 2
+```
+   $ python ns_main.py --mode "refinement" --teacher_name "gpurollout" --epoch 2
+```
 
 ## CelebA:
+- cd dcgan/DCGAN-tensorflow-master
+- To Train 
+```
+    $ python dc_main.py --G_it 2
+```
+ 
+- To Collaboratively Sample
+```
+   $ python dc_main.py --mode "refinement" --teacher_name "gpurollout" --epoch 2
+```

@@ -7,7 +7,6 @@ import pickle
 import os 
 import shutil
 import time
-import torch
 
 np.random.seed(1234)
 

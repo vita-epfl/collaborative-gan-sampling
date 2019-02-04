@@ -33,18 +33,18 @@ flags.DEFINE_integer("G_it", 1, "Updates of G per interation [1]")
 flags.DEFINE_integer("num_it", 1, "Number of runs [1]")
 
 ##Set the following parameters
-flags.DEFINE_string("mode", "refinement", "mode options: training | refinement | testing")
+flags.DEFINE_string("mode", "training", "mode options: training | refinement | testing")
 flags.DEFINE_boolean("denoise", False, "True for denoising, False for not denoising [False]")
 flags.DEFINE_boolean("use_refined", True, "True for shaping using refined samples, False for using default samples [False]")
-flags.DEFINE_integer("epoch", 2, "Epoch to train G and D [20]/ Epochs to refine D [5]")
-flags.DEFINE_integer("load_epoch", 400, "Epoch to load from for refinement")
+flags.DEFINE_integer("epoch", 5, "Epoch to train G and D [20]/ Epochs to refine D [5]")
+flags.DEFINE_integer("load_epoch", 1200, "Epoch to load from for refinement")
 flags.DEFINE_integer("refine_D_iters", 1, "Number of iteration to refine D [4]")
 flags.DEFINE_boolean("save_figs", False, "True for saving the comparison figures, False for nothing [False]")
 flags.DEFINE_integer("rollout_steps", 100, "Roll Out Steps. [100]")
 flags.DEFINE_integer("rollout_rate", 50, "Roll Out Rate [50]")
 flags.DEFINE_string("rollout_method", "momentum", "Rollout Method: sgd | momentum")
-flags.DEFINE_string("teacher_name", "gpurollout", "teacher options: default | scalized | mcts | rollout | gpurollout")
-flags.DEFINE_string("load_model_dir", "checkpoints/mnist/epoch_5_teacher_default_rollout_method_momentum_rollout_steps_100_rollout_rate_55.00000/mnist_64_28_28/", "directory to load model from")
+flags.DEFINE_string("teacher_name", "default", "teacher options: default | scalized | mcts | rollout | gpurollout")
+flags.DEFINE_string("load_model_dir", "checkpoints/mnist/epoch_5_teacher_default_rollout_method_momentum_rollout_steps_100_rollout_rate_50.00000/mnist_64_28_28/", "directory to load model from")
 FLAGS = flags.FLAGS
 
 # checkpoints/mnist/epoch_21_teacher_default_rollout_method_sgd_rollout_steps_100_rollout_rate_10.00000/mnist_64_28_28/

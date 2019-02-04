@@ -1,16 +1,18 @@
-# Prerequisites:
+## Prerequisites:
+ 
+- tensorflow==1.9.0
+- CuDNN=9.0 
+- scipy
+- matplotlib
+- requests
+- tqdm 
+- [MNIST IS Model](https://github.com/tensorflow/models/blob/master/research/gan/mnist/data/classify_mnist_graph_def.pb)
 
-scipy
-tensorflow v1.9.0
-CuDNN=7.0.5 
-matplotlib
-requests
-tqdm 
+## Usage:
+Download dataset with:
 
-# Usage:
-For downloading data
-python download.py mnist celebA
-wget https://github.com/tensorflow/models/blob/master/research/gan/mnist/data/classify_mnist_graph_def.pb
+    $ python download.py mnist celebA
+
 
 # 2d synthetic:
 cd teacher

@@ -15,7 +15,7 @@ flags.DEFINE_integer("input_height", 28, "The size of image to use (will be cent
 flags.DEFINE_integer("input_width", None, "The size of image to use (will be center cropped). If None, same value as input_height [None]")
 flags.DEFINE_integer("output_height", 28, "The size of the output images to produce [64]")
 flags.DEFINE_integer("output_width", None, "The size of the output images to produce. If None, same value as output_height [None]")
-flags.DEFINE_string("dataset", "mnist", "The name of dataset [celebA, mnist, lsun]")
+flags.DEFINE_string("dataset", "celebA", "The name of dataset [celebA, mnist, lsun]")
 flags.DEFINE_string("input_fname_pattern", "*.jpg", "Glob pattern of filename of input images [*]")
 flags.DEFINE_string("checkpoint_dir", "checkpoint", "Directory name to save the checkpoints [checkpoint]")
 flags.DEFINE_string("data_dir", "./data", "Root directory of dataset [data]")
@@ -33,18 +33,18 @@ flags.DEFINE_integer("G_it", 1, "Updates of G per interation [1]")
 flags.DEFINE_integer("num_it", 1, "Number of runs [1]")
 
 ##Set the following parameters
-flags.DEFINE_string("mode", "testing", "mode options: training | refinement | testing")
+flags.DEFINE_string("mode", "training", "mode options: training | refinement | testing")
 flags.DEFINE_boolean("denoise", False, "True for denoising, False for not denoising [False]")
 flags.DEFINE_boolean("use_refined", True, "True for shaping using refined samples, False for using default samples [False]")
 flags.DEFINE_integer("epoch", 5, "Epoch to train G and D [20]/ Epochs to refine D [5]")
 flags.DEFINE_integer("load_epoch", 0, "Epoch to load from for refinement")
-flags.DEFINE_integer("refine_D_iters", 3, "Number of iteration to refine D [4]")
+flags.DEFINE_integer("refine_D_iters", 1, "Number of iteration to refine D [4]")
 flags.DEFINE_boolean("save_figs", True, "True for saving the comparison figures, False for nothing [False]")
 flags.DEFINE_integer("rollout_steps", 100, "Roll Out Steps. [100]")
 flags.DEFINE_integer("rollout_rate", 50, "Roll Out Rate [50]")
 flags.DEFINE_string("rollout_method", "momentum", "Rollout Method: sgd | momentum")
-flags.DEFINE_string("teacher_name", "gpurollout", "teacher options: default | scalized | mcts | rollout | gpurollout")
-flags.DEFINE_string("load_model_dir", "dc_checkpoints/celebA/epoch_15_teacher_default_rollout_method_momentum_rollout_steps_100_rollout_rate_50.00000/celebA_64_64_64/", "directory to load model from")
+flags.DEFINE_string("teacher_name", "default", "teacher options: default | scalized | mcts | rollout | gpurollout")
+flags.DEFINE_string("load_model_dir", "dc_checkpoints/celebA/epoch_5_teacher_default_rollout_method_momentum_rollout_steps_100_rollout_rate_50.00000/celebA_64_64_64/", "directory to load model from")
 FLAGS = flags.FLAGS
 
 # checkpoints/mnist/epoch_21_teacher_default_rollout_method_sgd_rollout_steps_100_rollout_rate_10.00000/mnist_64_28_28/

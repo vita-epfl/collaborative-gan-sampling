@@ -2,6 +2,7 @@
  
 - tensorflow==1.9.0
 - CuDNN=9.0 
+- pillow
 - scipy
 - matplotlib
 - requests
@@ -13,13 +14,16 @@ Download dataset with:
 
     $ python download.py mnist celebA
 
+## 2d synthetic:
+- cd teacher
+- sh run.sh
+- sh run2.sh
+- sh run_imbal.sh
 
-# 2d synthetic:
-cd teacher
-sh run.sh
-sh run2.sh
-sh run_imbal.sh
+## MNIST:
+- cd dcgan/DCGAN-tensorflow-master
+- sh run_ns_gan.sh
 
-# MNIST:
-cd dcgan/DCGAN-tensorflow-master
-sh run_ns_gan.sh
+## CelebA:
+-
+- 

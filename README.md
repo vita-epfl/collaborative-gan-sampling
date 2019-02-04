@@ -1,23 +1,32 @@
-# Prerequisites:
+## Prerequisites:
+ 
+- tensorflow==1.9.0
+- CUDA==9.0
+- CuDNN=7.0.5 
+- pillow
+- scipy
+- matplotlib
+- requests
+- tqdm 
+- [MNIST IS Model](https://github.com/tensorflow/models/blob/master/research/gan/mnist/data/classify_mnist_graph_def.pb)
 
-scipy
-tensorflow v1.9.0
-CuDNN=7.0.5 
-matplotlib
-requests
-tqdm 
+## Usage:
+Download dataset with:
 
-# Usage:
-For downloading data
-python download.py mnist celebA
-wget https://github.com/tensorflow/models/blob/master/research/gan/mnist/data/classify_mnist_graph_def.pb
+    $ python download.py mnist celebA
 
-# 2d synthetic:
-cd teacher
-sh run.sh
-sh run2.sh
-sh run_imbal.sh
+## 2d synthetic:
+- cd teacher
+- sh run.sh
+- sh run2.sh
+- sh run_imbal.sh
 
-# MNIST:
-cd dcgan/DCGAN-tensorflow-master
-sh run_ns_gan.sh
+## MNIST:
+- cd dcgan/DCGAN-tensorflow-master
+- To Train 
+    $ python ns_main.py 
+ 
+- To Collaboratively Sample
+    $ python ns_main.py --mode "refinement" --teacher_name "gpurollout" --epoch 2
+
+## CelebA:

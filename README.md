@@ -2,7 +2,7 @@
 
 This repository contains the code for the paper: 
 
-Collaborative GAN Sampling 
+[Collaborative GAN Sampling](https://arxiv.org/abs/1902.00813)
 
 Please cite this paper if you use the code in this repository as part of a published research project.
 

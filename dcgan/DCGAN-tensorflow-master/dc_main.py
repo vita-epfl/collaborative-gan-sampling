@@ -25,6 +25,7 @@ flags.DEFINE_boolean("save_model", True, "True for saving model, False for nothi
 flags.DEFINE_boolean("crop", False, "True for training, False for testing [False]")
 flags.DEFINE_boolean("visualize", True, "True for visualizing, False for nothing [False]")
 flags.DEFINE_integer("generate_test_images", 100, "Number of images to generate during test. [100]")
+flags.DEFINE_string("teacher_name", "default", "teacher options: default | scalized | mcts | rollout | gpurollout")
 
 flags.DEFINE_float("D_LR", 1.0, "Multiplicative Factor of LR of D[1]")
 flags.DEFINE_integer("G_LR", 1, "Multiplicative Factor of LR of G[1]")
@@ -38,13 +39,26 @@ flags.DEFINE_boolean("denoise", False, "True for denoising, False for not denois
 flags.DEFINE_boolean("use_refined", True, "True for shaping using refined samples, False for using default samples [False]")
 flags.DEFINE_integer("epoch", 5, "Epoch to train G and D [20]/ Epochs to refine D [5]")
 flags.DEFINE_integer("load_epoch", 0, "Epoch to load from for refinement")
+flags.DEFINE_string("load_model_dir", "dc_checkpoints/celebA/epoch_5_teacher_default_rollout_method_momentum_rollout_steps_100_rollout_rate_50.00000/celebA_64_64_64/", "directory to load model from")
 flags.DEFINE_integer("refine_D_iters", 1, "Number of iteration to refine D [4]")
 flags.DEFINE_boolean("save_figs", True, "True for saving the comparison figures, False for nothing [False]")
 flags.DEFINE_integer("rollout_steps", 100, "Roll Out Steps. [100]")
 flags.DEFINE_integer("rollout_rate", 50, "Roll Out Rate [50]")
 flags.DEFINE_string("rollout_method", "momentum", "Rollout Method: sgd | momentum")
-flags.DEFINE_string("teacher_name", "default", "teacher options: default | scalized | mcts | rollout | gpurollout")
-flags.DEFINE_string("load_model_dir", "dc_checkpoints/celebA/epoch_5_teacher_default_rollout_method_momentum_rollout_steps_100_rollout_rate_50.00000/celebA_64_64_64/", "directory to load model from")
+'''
+mode: If training, trains the GAN. If refinement, shapes the  discriminator. If testing, collaboratively samples  
+denoise: Sets the application to Image Denoising
+use_refined: Uses the refined samples to shape the discriminator. If False, uses the default generated samples  
+epoch: Total number of epochs to run the `mode`
+load_epoch: If not training, the iterations/epoch to load the saved model from
+load_model_dir: The directory of saved model
+refine_D_iters: Used in refinement mode, to switch from 'refinement' to 'testing' upon complete of `refine_D_iters` of shaping D
+rollout_steps: The number of rollout steps (k)
+rollout_rate: The step_size of each rollout step  
+rollout_method: The optimization algorithm to roll out the samples
+'''
+
+
 FLAGS = flags.FLAGS
 
 # checkpoints/mnist/epoch_21_teacher_default_rollout_method_sgd_rollout_steps_100_rollout_rate_10.00000/mnist_64_28_28/
@@ -59,6 +73,12 @@ def main(_):
     FLAGS.input_height = 108
     FLAGS.crop = True
     FLAGS.output_height = 64
+
+  if FLAGS.mode == 'training':
+    FLAGS.teacher_name = 'default'
+  else:
+    FLAGS.teacher_name = 'gpurollout'
+
 
   if FLAGS.input_width is None:
     FLAGS.input_width = FLAGS.input_height

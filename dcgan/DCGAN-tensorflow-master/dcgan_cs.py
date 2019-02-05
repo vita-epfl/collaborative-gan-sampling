@@ -27,10 +27,6 @@ class DCGAN(object):
          y_dim=None, z_dim=100, gf_dim=64, df_dim=64, eval_size=64,
          gfc_dim=1024, dfc_dim=1024, c_dim=3, dataset_name='default',
          input_fname_pattern='*.jpg', checkpoint_dir=None, sample_dir=None, data_dir='./data', mode=None, config=None):
-    """
-    Args:
-        Describe Args
-    """
 
     self.sess = sess
     self.crop = crop
@@ -472,7 +468,8 @@ class DCGAN(object):
     if self.dataset_name == 'mnist':
       optimal_eval_batch = []
       default_eval_batch = []
-      for i in range(10):
+      it = self.eval_size // self.batch_size
+      for i in range(it):
         eval_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float32)
         opt_batch, def_batch = self.sess.run([self.teacher.optimal_batch, self.G], feed_dict={self.z: eval_z, self.inputs: eval_images, self.disc_LR: self.config.learning_rate})
         optimal_eval_batch.append(opt_batch)
@@ -514,7 +511,8 @@ class DCGAN(object):
     ##TODO FOR CIFAR/CELEBA
     if self.dataset_name == 'mnist':
       default_eval_batch = []
-      for i in range(10):
+      it = self.eval_size // self.batch_size
+      for i in range(it):
         eval_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float32)
         def_batch = self.sess.run(self.G, feed_dict={self.z: eval_z})
         default_eval_batch.append(def_batch)

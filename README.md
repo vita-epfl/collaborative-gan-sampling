@@ -26,7 +26,11 @@ We introduce a collaborative sampling scheme between the generator and discrimin
 ## Datasets:
 Download datasets with:
 
+	$ cd dcgan/DCGAN-tensorflow-master
     $ python download.py mnist celebA
+
+    $ mkdir model 
+    $ wget https://github.com/tensorflow/models/raw/master/research/gan/mnist/data/classify_mnist_graph_def.pb -P model/
 
 # 2D Synthetic Datasets
 

@@ -1,137 +1,57 @@
-# Collaborative GAN Sampling
+# Collaborative Sampling in Generative Adversarial Networks
 
 This repository contains the code for the paper: 
 
-[Collaborative GAN Sampling](https://arxiv.org/abs/1902.00813)
+[Collaborative Sampling in Generative Adversarial Networks](https://arxiv.org/abs/1902.00813)
 
-Please cite this paper if you use the code in this repository as part of a published research project.
+<img src="assets/diagram.png">
 
-## Overview
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/IntroImage.png" height="400" width="600">
+Once GAN training completes, we use both the generator and the discriminator to produce samples **collaboratively**. Our sampling scheme consists of one sample proposal step and multiple sample refinement steps. (I) The fixed generator proposes samples. (II) Subsequently, the discriminator provides gradients, with respect to activation maps of the proposed samples, back to a particular layer of the generator. Gradient-based updates of the activation maps are performed repeatedly until the samples are classified as *real* by the discriminator.
 
-We introduce a collaborative sampling scheme between the generator and discriminator for improved sample generation. Once GAN training completes, we freeze the parameters of the generator and refine the generated samples leveraging on the discriminator gradients. We further propose to shape the discriminator loss landscape using these refined samples. Through sample-wise optimization, our method shifts the model distribution closer to the real data distribution.
+<br>
 
-## Prerequisites:
+## [2D Synthetic](2D/README.md)
+
+![](assets/2d/3k.png) | ![](assets/2d/20k.png) | ![](assets/2d/rejection.png) | ![](assets/2d/collaborative.png)
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+3K iterations <br /> [standard sampling](https://papers.nips.cc/paper/5423-generative-adversarial-nets) | 20K iterations <br /> [standard sampling](https://papers.nips.cc/paper/5423-generative-adversarial-nets) | 3K iterations <br /> [rejection sampling](https://arxiv.org/abs/1810.06758) | 3K iterations <br /> our [collaborative sampling](https://arxiv.org/abs/1902.00813)
+
+NSGAN on a synthetic *imbalanced* mixture of 8 Gaussians. Standard GAN training is prone to mode collapse. Our collaborative sampling scheme applied to early terminated GANs succeeds in recovering all modes without compromising sample quality, significantly outperforming the rejection sampling method. 
+
+<br>
+
+## [Nature Images](image/README.md)
+![](assets/celebA/1.png) ![](assets/celebA/2.png) ![](assets/celebA/3.png) ![](assets/celebA/4.png) ![](assets/celebA/5.png) ![](assets/celebA/6.png) ![](assets/celebA/7.png) ![](assets/celebA/8.png) ![](assets/celebA/9.png) 
+
+DCGAN on the CelebA. (Top) Samples from standard sampling. (Middle) Samples from our collaboratively sampling method. (Bottom) The difference between the top and middle row images, reflecting the effectiveness of our method in improving the quality of natural images.
+
+<br>
+
+## Dependencies:
  
-- tensorflow==1.9.0
-- CUDA==9.0
-- CuDNN=7.0.5 
+- tensorflow==1.13.0
+- CUDA==10.0
 - pillow
 - scipy
 - matplotlib
 - requests
 - tqdm 
-- [MNIST IS Model](https://github.com/tensorflow/models/blob/master/research/gan/mnist/data/classify_mnist_graph_def.pb)
-
-## Datasets:
-Download datasets with:
-
-	$ cd dcgan/DCGAN-tensorflow-master
-    $ python download.py mnist celebA
-
-    $ mkdir model 
-    $ wget https://github.com/tensorflow/models/raw/master/research/gan/mnist/data/classify_mnist_graph_def.pb -P model/
-
-# 2D Synthetic Datasets
-
-## Commandline  
-
-```
-cd teacher
-sh run.sh
-sh run2.sh
-sh run_imbal.sh
-```
-
-## Results 
-
-### Schemes: 
-
-a. *GAN*: Standard sampling from GAN only using the trained generator
-
-b. *G2N-freeze*: Collaborative sampling from both the generator and discriminator, without additional discriminator training 
-
-c. *G2N-tuning*: Collaborative sampling from both the generator and discriminator, with discriminator tuning using generated samples
-
-d. *G2N-shaping*: Collaborative sampling from both the generator and discriminator, with discriminator shaping using refined samples
-
-### 2D Gaussians 
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/2DGauss.png" height="400" width="600">
 
 <br>
 
-### SwissRoll
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/SwissRoll.png" height="400" width="600">
-
-<br>
-
-### Preventing Mode Collapse
-
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/ModeCollapse.png" height="400" width="400">
-
-<br>
-
-# MNIST
-## Commandline 
-- cd dcgan/DCGAN-tensorflow-master
-- To Train 
+## Citation
+If you find the codes or paper useful for your research, please cite our paper:
 ```
-    $ python ns_main.py 
+@misc{liu2019collaborative,
+  title={Collaborative Sampling in Generative Adversarial Networks},
+  author={Liu, Yuejiang and Kothari, Parth Ashit and Alahi, Alexandre},
+  year={2019},
+  Eprint = {arXiv:1902.00813}
+}
 ```
- 
-- To Collaboratively Sample
-```
-   $ python ns_main.py --mode "refinement" --teacher_name "gpurollout" --epoch 2
-```
-
-## Results
-
-### After 800 iterations 
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/it1200.png" height="200" width="600">
-
-<br>
-
-### After 1200 iterations 
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/it800.png" height="200" width="600">
-
-<br>
-
-### After 4000 iterations
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/it4000.png" height="200" width="600">
-
-<br>
-
-### Quantitative Comparison
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/QuantitativeComparison.png" height="300" width="600">
-
-<br>
-
-### Application in Denoising
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/Denoise.png" height="200" width="600">
-
-<br>
-
-# CelebA
-## Commandline 
-- cd dcgan/DCGAN-tensorflow-master
-- To Train 
-```
-    $ python dc_main.py --G_it 2
-```
- 
-- To Collaboratively Sample
-```
-   $ python dc_main.py --mode "refinement" --teacher_name "gpurollout" --epoch 2
-```
-
-##Results
-
-<img src="https://github.com/vita-epfl/collaborative-gan-sampling/raw/master/images/CelebA.png" height="150" width="800">
 
 <br>
 
 ## Acknowledgements
 The baseline implementation has been based on [this repository](https://github.com/carpedm20/DCGAN-tensorflow)
-
-
 

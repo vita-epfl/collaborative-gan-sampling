@@ -18,7 +18,7 @@ python ns_main.py --mode "testing" --refiner_name "gpurollout" --imbalance True 
 ```
 python dc_main.py --mode "training" --epoch 50 --G_it 2 --crop --save_model
 python dc_main.py --mode "refinement" --crop --refiner_name "gpurollout" --epoch 2 --load_model_dir dc_checkpoints/celebA/epoch_50_refiner_default_rollout_method_momentum_rollout_steps_10_rollout_rate_5.00000/celebA_100_64_64/ --load_epoch 30 --rollout_steps=20 --rollout_rate=0.1 --collab_layer=1 
-python dc_main.py --dataset celebA --crop --mode "testing" --teacher_name "gpurollout" --epoch 0 --load_model_dir dc_checkpoints/celebA/epoch_2_teacher_gpurollout_rollout_method_momentum_rollout_steps_20_rollout_rate_0.01000/celebA_100_64_64/ --load_epoch 1 --rollout_steps=20 --rollout_rate=0.1 --collab_layer=1 --save_figs 
+python dc_main.py --dataset celebA --crop --mode "testing" --teacher_name "gpurollout" --epoch 0 --load_model_dir dc_checkpoints/celebA/epoch_2_refiner_gpurollout_rollout_method_momentum_rollout_steps_20_rollout_rate_0.10000/celebA_100_64_64/ --load_epoch 1 --rollout_steps=20 --rollout_rate=0.1 --collab_layer=1 --save_figs 
 ```
 
 ## WGAN-GP

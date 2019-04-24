@@ -485,56 +485,6 @@ class DCGAN(object):
     out = x*0.9 + (x-1)*0.1
     return out
 
-
-  def score_testing(self):
-    
-    ## Get Quantitative Comparisons
-    eval_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float32)
-
-    if self.config.dataset == 'mnist' or self.config.dataset == 'cifar10':
-      eval_images = self.data_X[:self.batch_size]
-    else:  
-      batch_files = self.data[idx*self.batch_size:(idx+1)*self.batch_size]
-      batch = [
-          get_image(batch_file,
-                    input_height=self.input_height,
-                    input_width=self.input_width,
-                    resize_height=self.output_height,
-                    resize_width=self.output_width,
-                    crop=self.crop,
-                    grayscale=self.grayscale) for batch_file in batch_files]
-      if (self.grayscale):
-        eval_images = np.array(batch).astype(np.float32)[:, :, :, None]
-      else:
-        eval_images = np.array(batch).astype(np.float32)
-
-    # Visualization for Collaborative Sampling    
-    optimal_batch, input_batch = self.sess.run([self.refined_batch, self.G], feed_dict={self.z: eval_z, self.inputs: eval_images, self.disc_LR: self.config.learning_rate})
-    if self.config.save_figs:
-      plot_figs(input_batch, optimal_batch, epoch, idx, self.config)
-      plot_pairs(input_batch, optimal_batch, epoch, idx, self.config)
-
-    optimal_eval_batch = []
-    default_eval_batch = []
-    it = self.eval_size // self.batch_size
-    for i in range(it):
-      eval_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float32)
-      opt_batch, def_batch = self.sess.run([self.refined_batch, self.G], feed_dict={self.z: eval_z, self.inputs: eval_images, self.disc_LR: self.config.learning_rate})
-      optimal_eval_batch.append(opt_batch)
-      default_eval_batch.append(def_batch)
-    optimal_eval_batch = np.array(np.concatenate(optimal_eval_batch))
-    default_eval_batch = np.array(np.concatenate(default_eval_batch))
-
-    self.inception_score_mnist = self.inception_score.eval({self.evaluator: default_eval_batch})
-    print("IS default     : {:.4f}".format(self.inception_score_mnist))
-    self.incp_score.append(self.inception_score_mnist)
-
-    self.inception_score_mnist_refined = self.inception_score.eval({self.evaluator: optimal_eval_batch})
-    print("IS refined [#{:d}]: {:.4f}".format(self.collab_layer, self.inception_score_mnist_refined))
-    self.incp_score_refined.append(self.inception_score_mnist_refined)
-  
-    return 
-
   def score_refinement(self, epoch, idx):
     
     optimal_eval_batch = []
@@ -572,6 +522,57 @@ class DCGAN(object):
     if self.config.save_figs:
       plot_figs(default_eval_batch, optimal_eval_batch, epoch, idx, self.config)
       plot_pairs(default_eval_batch, optimal_eval_batch, epoch, idx, self.config)
+
+    self.inception_score_mnist = self.inception_score.eval({self.evaluator: default_eval_batch})
+    print("IS default     : {:.4f}".format(self.inception_score_mnist))
+    self.incp_score.append(self.inception_score_mnist)
+
+    self.inception_score_mnist_refined = self.inception_score.eval({self.evaluator: optimal_eval_batch})
+    print("IS refined [#{:d}]: {:.4f}".format(self.collab_layer, self.inception_score_mnist_refined))
+    self.incp_score_refined.append(self.inception_score_mnist_refined)
+  
+    return 
+
+  def score_testing(self):
+    
+    epoch, idx = 0, 0
+
+    ## Get Quantitative Comparisons
+    eval_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float32)
+
+    if self.config.dataset == 'mnist' or self.config.dataset == 'cifar10':
+      eval_images = self.data_X[:self.batch_size]
+    else:  
+      batch_files = self.data[idx*self.batch_size:(idx+1)*self.batch_size]
+      batch = [
+          get_image(batch_file,
+                    input_height=self.input_height,
+                    input_width=self.input_width,
+                    resize_height=self.output_height,
+                    resize_width=self.output_width,
+                    crop=self.crop,
+                    grayscale=self.grayscale) for batch_file in batch_files]
+      if (self.grayscale):
+        eval_images = np.array(batch).astype(np.float32)[:, :, :, None]
+      else:
+        eval_images = np.array(batch).astype(np.float32)
+
+    # Visualization for Collaborative Sampling    
+    optimal_batch, input_batch = self.sess.run([self.refined_batch, self.G], feed_dict={self.z: eval_z, self.inputs: eval_images, self.disc_LR: self.config.learning_rate})
+    if self.config.save_figs:
+      plot_figs(input_batch, optimal_batch, epoch, idx, self.config)
+      plot_pairs(input_batch, optimal_batch, epoch, idx, self.config)
+
+    optimal_eval_batch = []
+    default_eval_batch = []
+    it = self.eval_size // self.batch_size
+    for i in range(it):
+      eval_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float32)
+      opt_batch, def_batch = self.sess.run([self.refined_batch, self.G], feed_dict={self.z: eval_z, self.inputs: eval_images, self.disc_LR: self.config.learning_rate})
+      optimal_eval_batch.append(opt_batch)
+      default_eval_batch.append(def_batch)
+    optimal_eval_batch = np.array(np.concatenate(optimal_eval_batch))
+    default_eval_batch = np.array(np.concatenate(default_eval_batch))
 
     self.inception_score_mnist = self.inception_score.eval({self.evaluator: default_eval_batch})
     print("IS default     : {:.4f}".format(self.inception_score_mnist))
@@ -786,7 +787,10 @@ class DCGAN(object):
             global_step=step)
 
   def restore(self, checkpoint_dir, step):
-    model_name = "DCGAN.model"
+    if self.config.mode == "training":
+      model_name = "DCGAN.model"
+    else:
+      model_name = "DCGAN-layer" + str(self.collab_layer) +  ".model"  
     ckpt_name = os.path.join(checkpoint_dir, model_name) + "-" + str(step)
     print("Model file to restore: ", self.sess, ckpt_name)
     self.saver.restore(self.sess, ckpt_name)

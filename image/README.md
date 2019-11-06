@@ -27,4 +27,3 @@ python wgan_main.py --mode "training" --epoch 20 -save_model True --imbalance Tr
 python wgan_main.py --mode "refinement" --refiner_name "gpurollout" --imbalance True --epoch 1  --load_model_dir checkpoints/mnist/epoch_20_refiner_default_rollout_method_momentum_rollout_steps_10_rollout_rate_0.10000/ --load_epoch 15 --save_figs --rollout_steps=50 --rollout_rate=0.1 --save_model --collab_layer 2 
 python wgan_main.py --mode "testing" --refiner_name "gpurollout" --imbalance True --epoch 0 --load_model_dir checkpoints/mnist/epoch_1_refiner_gpurollout_rollout_method_momentum_rollout_steps_50_rollout_rate_0.10000/ --load_epoch 0 --save_figs --rollout_steps=50 --rollout_rate=0.1 --collab_layer 2 
 ```
-

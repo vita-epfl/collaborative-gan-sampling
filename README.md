@@ -12,13 +12,20 @@ Once GAN training completes, we use both the generator and the discriminator to 
 
 ## [2D Synthetic](2D/README.md)
 
-![](assets/2d/3k.png) | ![](assets/2d/20k.png) | ![](assets/2d/rejection.png) | ![](assets/2d/collaborative.png)
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-3K iterations <br /> [standard sampling](https://papers.nips.cc/paper/5423-generative-adversarial-nets) | 20K iterations <br /> [standard sampling](https://papers.nips.cc/paper/5423-generative-adversarial-nets) | 3K iterations <br /> [rejection sampling](https://arxiv.org/abs/1810.06758) | 3K iterations <br /> our [collaborative sampling](https://arxiv.org/abs/1902.00813)
+![](assets/2d/sample_real.png) | ![](assets/2d/sample_early.png) | ![](assets/2d/sample_collapse.png) | ![](assets/2d/sample_reject.png) | ![](assets/2d/sample_mh.png) | ![](assets/2d/sample_refine.png) | ![](assets/2d/sample_collab.png) 
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+Real | [GAN](https://papers.nips.cc/paper/5423-generative-adversarial-nets) 1K | [GAN](https://papers.nips.cc/paper/5423-generative-adversarial-nets) 9K | [DRS](https://arxiv.org/abs/1810.06758) | [MH-GAN](https://arxiv.org/abs/1810.06758) | Refinement (Ours) | Collaborative (Ours)
 
 NSGAN on a synthetic *imbalanced* mixture of 8 Gaussians. Standard GAN training is prone to mode collapse. Our collaborative sampling scheme applied to early terminated GANs succeeds in recovering all modes without compromising sample quality, significantly outperforming the rejection sampling method. 
 
-<br>
+####Imbalaned 8 Gaussians
+![](assets/2d/Imbal-8Gaussians_benchmark_2d_good.png) | ![](assets/2d/Imbal-8Gaussians_benchmark_2d_kl.png) | ![](assets/2d/Imbal-8Gaussians_benchmark_2d_js.png) 
+:-------------------------:|:-------------------------:|:-------------------------:
+
+####25 Gaussians 
+![](assets/2d/25Gaussians_benchmark_2d_good.png) | ![](assets/2d/25Gaussians_benchmark_2d_kl.png) | ![](assets/2d/25Gaussians_benchmark_2d_js.png) 
+:-------------------------:|:-------------------------:|:-------------------------:
+
 
 ## [Nature Images](image/README.md)
 ![](assets/celebA/1.png) ![](assets/celebA/2.png) ![](assets/celebA/3.png) ![](assets/celebA/4.png) ![](assets/celebA/5.png) ![](assets/celebA/6.png) ![](assets/celebA/7.png) ![](assets/celebA/8.png) ![](assets/celebA/9.png) 
@@ -32,7 +39,7 @@ DCGAN on the CelebA. (Top) Samples from standard sampling. (Middle) Samples from
 - tensorflow==1.13.0
 - CUDA==10.0
 - pillow
-- scipy
+- scipy=1.2
 - matplotlib
 - requests
 - tqdm 
@@ -42,11 +49,10 @@ DCGAN on the CelebA. (Top) Samples from standard sampling. (Middle) Samples from
 ## Citation
 If you find the codes or paper useful for your research, please cite our paper:
 ```
-@misc{liu2019collaborative,
+@techreport{liu2019collaborative,
   title={Collaborative Sampling in Generative Adversarial Networks},
   author={Liu, Yuejiang and Kothari, Parth Ashit and Alahi, Alexandre},
-  year={2019},
-  Eprint = {arXiv:1902.00813}
+  year={2019}
 }
 ```
 
@@ -54,4 +60,3 @@ If you find the codes or paper useful for your research, please cite our paper:
 
 ## Acknowledgements
 The baseline implementation has been based on [this repository](https://github.com/carpedm20/DCGAN-tensorflow)
-

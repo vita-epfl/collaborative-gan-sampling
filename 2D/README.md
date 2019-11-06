@@ -14,3 +14,4 @@ python main.py --mode="refinement" --rollout_rate=0.1 --rollout_steps=50 --rollo
 ```
 python main.py --mode="rejection" --niters=1 --dataset="Imbal-8Gaussians" --ckpt_num=3000 
 ```
+

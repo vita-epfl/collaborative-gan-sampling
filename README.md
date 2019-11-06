@@ -18,13 +18,13 @@ Real | [GAN](https://papers.nips.cc/paper/5423-generative-adversarial-nets) 1K |
 
 NSGAN on a synthetic *imbalanced* mixture of 8 Gaussians. Standard GAN training is prone to mode collapse. Our collaborative sampling scheme applied to early terminated GANs succeeds in recovering all modes without compromising sample quality, significantly outperforming the rejection sampling method. 
 
-####Imbalaned 8 Gaussians
-![](assets/2d/Imbal-8Gaussians_benchmark_2d_good.png) | ![](assets/2d/Imbal-8Gaussians_benchmark_2d_kl.png) | ![](assets/2d/Imbal-8Gaussians_benchmark_2d_js.png) 
-:-------------------------:|:-------------------------:|:-------------------------:
+#### Imbalaned 8 Gaussians
 
-####25 Gaussians 
+![](assets/2d/Imbal-8Gaussians_benchmark_2d_good.png) | ![](assets/2d/Imbal-8Gaussians_benchmark_2d_kl.png) | ![](assets/2d/Imbal-8Gaussians_benchmark_2d_js.png) 
+
+#### 25 Gaussians 
+
 ![](assets/2d/25Gaussians_benchmark_2d_good.png) | ![](assets/2d/25Gaussians_benchmark_2d_kl.png) | ![](assets/2d/25Gaussians_benchmark_2d_js.png) 
-:-------------------------:|:-------------------------:|:-------------------------:
 
 
 ## [Nature Images](image/README.md)

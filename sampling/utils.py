@@ -9,8 +9,6 @@ import shutil
 import time
 from scipy import stats
 
-np.random.seed(1234)
-
 from operator import itemgetter
 from scipy.stats import multivariate_normal
 from scipy.spatial.distance import cdist

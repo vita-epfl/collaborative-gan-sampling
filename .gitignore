@@ -48,8 +48,6 @@ image/model/
 image/samples/
 image/scores/
 manuscript/figures/
-attack/models/
-attack/results/
 mnist/*.png
 *.tmp
 manuscript/results/

@@ -1,1 +1,0 @@
-python main.py --dataset=Imbal-8Gaussians --niters=5001 --mode="training" --save_model

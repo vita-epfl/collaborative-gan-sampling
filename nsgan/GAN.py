@@ -15,7 +15,7 @@ import sys
 sys.path.append(os.path.join('..', 'sampling'))
 from utils_sampling import calibration_diagnostic
 
-MIN_EFFICIENCY = 0.001
+MIN_EFFICIENCY = 0.2
 
 class GAN(object):
     model_name = "GAN"     # name for checkpoint
@@ -230,16 +230,6 @@ class GAN(object):
                     self.save(self.checkpoint_dir, counter)
                 counter += 1
 
-                # # save training results for every 300 steps
-                # if np.mod(counter, 300) == 0:
-                #     samples = self.sess.run(self.fake_images, feed_dict={self.z: self.sample_z})
-                #     tot_num_samples = min(self.sample_num, self.batch_size)
-                #     manifold_h = int(np.floor(np.sqrt(tot_num_samples)))
-                #     manifold_w = int(np.floor(np.sqrt(tot_num_samples)))
-                #     save_images(samples[:manifold_h * manifold_w, :, :, :], [manifold_h, manifold_w],
-                #                 './' + check_folder(self.result_dir + '/' + self.model_dir) + '/' + self.model_name + '_train_{:02d}_{:04d}.png'.format(
-                #                     epoch, idx))
-
             # After an epoch, start_batch_id is set to zero
             # non-zero value is only for the first epoch after loading pre-trained model
             start_batch_id = 0
@@ -261,7 +251,7 @@ class GAN(object):
         counter = 0
 
         # shape discriminator
-        for epoch in range(3):
+        for epoch in range(2):
 
             # get batch data
             for idx in range(0, self.num_batches):
@@ -309,7 +299,8 @@ class GAN(object):
                 sigmoid_standard[i_batch*self.batch_size:(i_batch+1)*self.batch_size, :] = batch_sigmoid
             # diagnostic discriminator
             z_dawid, brier_score, ece, mce = calibration_diagnostic(sigmoid_standard, sigmoid_real)
-            print("Iter %d: z_calib = %.2f, brier_score = %.2f, ece = %.2f, mce = %.2f" % (counter, z_dawid, brier_score, ece, mce))
+            # print("Iter %d: z_calib = %.2f, brier_score = %.2f, ece = %.2f, mce = %.2f" % (counter, z_dawid, brier_score, ece, mce))
+            
             # evaluation
             classifier_score_mnist = self.inception_score.eval({self.eval_fake: eval_standard})
             frechet_distance_mnist = self.frechet_distance.eval({self.eval_fake: eval_standard, self.eval_real: eval_real})
@@ -339,9 +330,9 @@ class GAN(object):
                             eval_reject[cnt_reject:self.eval_size] = eval_reject_batch[:self.eval_size-cnt_reject]
                     cnt_reject = cnt_reject + cnt_batch
                 else:
-                    print("Oops, too inefficient")
+                    # print("Oops, too inefficient")
                     if cnt_reject + self.batch_size < self.eval_size:
-                        eval_reject[cnt_reject:] = batch_samples
+                        eval_reject[cnt_reject:cnt_reject+self.batch_size] = batch_samples
                     else:
                         eval_reject[cnt_reject:self.eval_size] = batch_samples[:self.eval_size-cnt_reject]
                     cnt_reject = cnt_reject + self.batch_size
@@ -376,9 +367,9 @@ class GAN(object):
                             eval_mh[cnt_mh:self.eval_size] = eval_mh_batch[:self.eval_size-cnt_mh]
                     cnt_mh = cnt_mh + cnt_batch
                 else:
-                    print("Oops, too inefficient")
+                    # print("Oops, too inefficient")
                     if cnt_mh + self.batch_size < self.eval_size:
-                        eval_mh[cnt_mh:] = batch_samples
+                        eval_mh[cnt_mh:cnt_mh+self.batch_size] = batch_samples
                     else:
                         eval_mh[cnt_mh:self.eval_size] = batch_samples[:self.eval_size-cnt_mh]
                     cnt_mh = cnt_mh + self.batch_size
@@ -427,9 +418,9 @@ class GAN(object):
                             eval_collab[cnt_collab:self.eval_size] = eval_collab_batch[:self.eval_size-cnt_collab]
                     cnt_collab = cnt_collab + cnt_batch
                 else:
-                    print("Oops, too inefficient")
+                    # print("Oops, too inefficient")
                     if cnt_collab + self.batch_size < self.eval_size:
-                        eval_collab[cnt_collab:] = batch_refine
+                        eval_collab[cnt_collab:cnt_collab+self.batch_size] = batch_refine
                     else:
                         eval_collab[cnt_collab:self.eval_size] = batch_refine[:self.eval_size-cnt_collab]
                     cnt_collab = cnt_collab + self.batch_size

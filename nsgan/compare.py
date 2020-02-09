@@ -105,7 +105,7 @@ def compare_generator_stage(args, logdir, data_standard, data_rejection, data_ha
         'GAN Iteration', 'CS', fname=logdir + args.mode + "_is.png")
     plot_method(data_standard[1:, 0], data_standard[1:, 3], data_rejection[1:, 3], data_hastings[1:, 3], data_refinement[1:, 3], data_collaborate[1:, 3],
         'standard', 'rejection', 'mh', 'refinement', 'collaborative',
-        'GAN Iteration', 'FD', fname=logdir + args.mode + "_fid.png")
+        'GAN Iteration', 'FD', fname=logdir + args.mode + "_fd.png")
 
 
 def main():
@@ -135,6 +135,4 @@ def main():
 
 
 if __name__ == '__main__':
-
-    # main functions
     main()

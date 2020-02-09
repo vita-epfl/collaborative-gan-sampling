@@ -108,7 +108,7 @@ def main():
             print(" [*] Testing finished!")
         elif args.mode == "shape" or args.mode == "calibrate":
             gan.shape(mode=args.mode, method=args.method, ckpt_num=args.ckpt_num)
-            print(" [*] Shaping finished!")
+            print(" [*] Sampling finished!")
         else:
             pass
 

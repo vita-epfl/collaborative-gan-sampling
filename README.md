@@ -1,6 +1,8 @@
 # Collaborative Sampling in Generative Adversarial Networks
 
-> The standard practice in using Generative Adversarial Networks (GANs) discards the discriminator. However, this sampling method loses valuable information learned by the discriminator regarding the data distribution. In this work, we propose a collaborative sampling scheme between the generator and the discriminator for improved data generation. Guided by the discriminator, our approach refines the generated samples through gradient-based updates at a particular layer of the generator, shifting the generator distribution closer to the real data distribution. Additionally, we introduce a practical discriminator shaping method that can smoothen the loss landscape provided by the discriminator for effective sample refinement. Through extensive experiments on synthetic and image datasets, we demonstrate that our proposed method can improve generated samples both quantitatively and qualitatively, offering a new degree of freedom in GAN sampling. 
+This repository provides a TensorFlow implementation of the Collaborative Sampling in Generative Adversarial Networks.
+
+#### [AAAI20](https://arxiv.org/pdf/1902.00813.pdf)  |  [Poster](https://drive.google.com/open?id=1dAO_rptJ7qOhPHVMW_9hS425Wm83LcL8)  |  [PyTorch](https://github.com/YuejiangLIU/pytorch-collaborative-gan-sampling)
 
 ```
 @InProceedings{liu2019collaborative,

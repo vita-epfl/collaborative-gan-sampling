@@ -4,14 +4,6 @@ This repository provides a TensorFlow implementation of the Collaborative Sampli
 
 #### [AAAI20](https://arxiv.org/pdf/1902.00813.pdf)  |  [Poster](https://drive.google.com/open?id=1dAO_rptJ7qOhPHVMW_9hS425Wm83LcL8)  |  [PyTorch](https://github.com/YuejiangLIU/pytorch-collaborative-gan-sampling)
 
-```
-@InProceedings{liu2019collaborative,
-  title={Collaborative Sampling in Generative Adversarial Networks},
-  author={Liu, Yuejiang and Kothari, Parth Ashit and Alahi, Alexandre},
-  year={2019}
-}
-```
-
 <br>
 
 ## Overview
@@ -66,6 +58,21 @@ CycleGAN for unpaired image-to-image translation. (Top) Samples from standard sa
 - tqdm 
 
 <br>
+
+## Citation:
+
+If you use this code for your research, please cite our papers.
+
+```
+@misc{liu2019collaborative,
+    title={Collaborative Sampling in Generative Adversarial Networks},
+    author={Yuejiang Liu and Parth Kothari and Alexandre Alahi},
+    year={2019},
+    eprint={1902.00813},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG}
+}
+```
 
 ## Acknowledgements
 The baseline implementation has been based on [this repository](https://github.com/carpedm20/DCGAN-tensorflow)

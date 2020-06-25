@@ -2,7 +2,7 @@
 
 This repository provides a TensorFlow implementation of the Collaborative Sampling in Generative Adversarial Networks.
 
-#### [AAAI20](https://arxiv.org/pdf/1902.00813.pdf)  |  [Poster](https://drive.google.com/open?id=1dAO_rptJ7qOhPHVMW_9hS425Wm83LcL8)  |  [PyTorch](https://github.com/YuejiangLIU/pytorch-collaborative-gan-sampling)
+#### [Paper](https://aaai.org/ojs/index.php/AAAI/article/view/5933/5789)  |  [Poster](https://drive.google.com/open?id=1dAO_rptJ7qOhPHVMW_9hS425Wm83LcL8)  |  [PyTorch](https://github.com/YuejiangLIU/pytorch-collaborative-gan-sampling)
 
 <br>
 
@@ -64,13 +64,11 @@ CycleGAN for unpaired image-to-image translation. (Top) Samples from standard sa
 If you use this code for your research, please cite our papers.
 
 ```
-@misc{liu2019collaborative,
-    title={Collaborative Sampling in Generative Adversarial Networks},
-    author={Yuejiang Liu and Parth Kothari and Alexandre Alahi},
-    year={2019},
-    eprint={1902.00813},
-    archivePrefix={arXiv},
-    primaryClass={cs.LG}
+@inproceedings{liu2019collaborative,
+  title={Collaborative Sampling in Generative Adversarial Networks},
+  author={Liu, Yuejiang and Kothari, Parth and Alahi, Alexandre},
+  booktitle={Thirty-first AAAI conference on artificial intelligence},
+  year={2020}
 }
 ```
 
